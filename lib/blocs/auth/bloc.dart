@@ -92,7 +92,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     if (state is LoggingOut) return;
     emit(LoggingOut());
     try {
-      await Future.delayed(const Duration(seconds: 2));
       final success = await _authRepository.removeAuthInfo();
       if (success) {
         emit(NotLoggedIn());

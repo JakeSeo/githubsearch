@@ -1,35 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:githubsearch/views/screens/home_screen.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../blocs/auth/bloc.dart';
 import '../common/custom_icon.dart';
 import '../view_utils.dart';
+import 'home/pages/home_page.dart';
 
 class LoginScreen extends StatelessWidget {
-  static const String name = "/login";
+  static const String name = "login";
+  static const String path = "/login";
   const LoginScreen({super.key});
-
-  static pushNamedAndRemoveUntil(
-    BuildContext context,
-  ) async {
-    return await Navigator.pushNamedAndRemoveUntil(
-      context,
-      name,
-      (route) => false,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is LoggedIn) {
-          HomeScreen.pushNamedAndRemoveUntil(context);
+          context.goNamed(HomePage.name);
         }
       },
       child: Scaffold(
-        backgroundColor: ViewUtils.mainBlack,
         body: SafeArea(
           minimum: const EdgeInsets.symmetric(horizontal: 20),
           child: Center(
@@ -38,7 +29,7 @@ class LoginScreen extends StatelessWidget {
               children: [
                 const Hero(
                   tag: "hero_logo",
-                  child: CustomIcon("icon_logo_inverted.svg"),
+                  child: CustomIcon("icon_logo.svg"),
                 ),
                 const SizedBox(height: 16),
                 Row(
