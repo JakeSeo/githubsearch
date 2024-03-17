@@ -1,9 +1,9 @@
-import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 
+import '../../injector.dart';
 import '../../models/auth_request_param/info.dart';
 import '../../models/refresh_token_request_param/info.dart';
 import '../../repositories/auth_repository.dart';
@@ -19,9 +19,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<Logout>(_logout);
   }
 
-  final AuthRepository _authRepository = AuthRepository();
+  final AuthRepository _authRepository = injector.get<AuthRepository>();
   final GithubAuthRepository _githubAuthRepository =
-      GithubAuthRepository(Dio());
+      injector.get<GithubAuthRepository>();
 
   _initialize(AuthInitialize event, Emitter<AuthState> emit) async {
     emit(AuthInitializing());

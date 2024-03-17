@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:githubsearch/injector.dart';
 
 import 'blocs/auth/bloc.dart';
+import 'blocs/profile/bloc.dart';
 import 'router/app_router.dart';
 import 'views/view_utils.dart';
 
@@ -24,6 +25,9 @@ class MyApp extends StatelessWidget {
         providers: [
           BlocProvider<AuthBloc>(
             create: (_) => AuthBloc(),
+          ),
+          BlocProvider<ProfileBloc>(
+            create: (_) => ProfileBloc(),
           ),
         ],
         child: MaterialApp.router(
