@@ -5,7 +5,7 @@ import '../views/screens/home/pages/home_page.dart';
 import '../views/screens/home/pages/profile_page.dart';
 import '../views/screens/home_screen.dart';
 import '../views/screens/login_screen.dart';
-import '../views/screens/search_screen.dart';
+import '../views/screens/search/screen.dart';
 import '../views/screens/settings_screen.dart';
 import '../views/screens/splash_screen.dart';
 

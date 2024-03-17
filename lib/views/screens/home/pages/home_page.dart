@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../search_screen.dart';
+import '../../search/screen.dart';
 
 class HomePage extends StatefulWidget {
   static const String name = "home";

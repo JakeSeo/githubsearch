@@ -2,6 +2,8 @@ import 'package:dio/dio.dart' hide Headers;
 import 'package:retrofit/retrofit.dart';
 
 import '../../models/github_user/info.dart';
+import '../../models/search_request_param/info.dart';
+import '../../models/search_response/user/info.dart';
 
 part 'repository.g.dart';
 
@@ -31,6 +33,8 @@ abstract class GithubRepository {
   // @GET("/search/topics")
   // Future searchTopics();
 
-  // @GET("/search/users")
-  // Future searchUsers();
+  @GET("/search/users")
+  Future<SearchUserResponseInfo> searchUsers({
+    @Queries() required SearchRequestParamInfo param,
+  });
 }

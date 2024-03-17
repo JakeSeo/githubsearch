@@ -1,9 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import '../search_result_info.dart';
+
 part 'info.g.dart';
 
 @JsonSerializable()
-class GithubUserInfo {
+class GithubUserInfo extends SearchResultInfo {
   @JsonKey(name: "login")
   final String login;
   @JsonKey(name: "id")

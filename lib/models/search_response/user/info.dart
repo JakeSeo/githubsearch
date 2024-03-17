@@ -7,6 +7,7 @@ part 'info.g.dart';
 
 @JsonSerializable()
 class SearchUserResponseInfo extends SearchResponseInfo {
+  @JsonKey(name: "items")
   final List<GithubUserInfo> userList;
   SearchUserResponseInfo({
     required super.totalCount,
