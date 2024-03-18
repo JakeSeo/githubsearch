@@ -11,6 +11,7 @@ import '../views/screens/search/screen.dart';
 import '../views/screens/search_result_screen.dart';
 import '../views/screens/settings_screen.dart';
 import '../views/screens/splash_screen.dart';
+import '../views/webview_screen.dart';
 
 final GlobalKey<NavigatorState> rootKey = GlobalKey<NavigatorState>();
 final GlobalKey<NavigatorState> shellNavKey = GlobalKey<NavigatorState>();
@@ -73,6 +74,12 @@ class AppRouter {
         name: SettingsScreen.name,
         path: SettingsScreen.path,
         builder: (_, __) => const SettingsScreen(),
+      ),
+      GoRoute(
+        name: WebViewScreen.name,
+        path: WebViewScreen.path,
+        builder: (_, state) =>
+            WebViewScreen(url: state.uri.queryParameters["url"] ?? ""),
       ),
     ],
   );
