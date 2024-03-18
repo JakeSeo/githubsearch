@@ -93,5 +93,6 @@ https://docs.github.com/ko/apps/creating-github-apps/registering-a-github-app/re
 <img src = "https://github.com/JakeSeo/githubsearch/assets/10471865/e35cac9e-3355-4a58-a55e-e160c6562206" width="25%"/>
 <img src = "https://github.com/JakeSeo/githubsearch/assets/10471865/2a1d692a-1045-470d-8af1-db2d3819048c" width="25%"/>
 <img src = "https://github.com/JakeSeo/githubsearch/assets/10471865/57337498-ab10-4c87-bd20-723a45d3c5a9" width="25%"/>
+<img src = "https://github.com/JakeSeo/githubsearch/assets/10471865/682693aa-2521-4816-ad11-efc4cfc80017" width="25%"/>
 <img src = "https://github.com/JakeSeo/githubsearch/assets/10471865/4a27ef04-1d2c-4c40-b8d2-cec09842052f" width="25%"/>
 <img src = "https://github.com/JakeSeo/githubsearch/assets/10471865/6c673d27-022a-48b6-902b-2d4d1e50949a" width="25%"/>
