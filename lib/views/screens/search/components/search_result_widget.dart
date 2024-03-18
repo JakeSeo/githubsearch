@@ -44,15 +44,10 @@ class SearchResultWidget extends StatelessWidget {
       child: Column(
         children: [
           _buildCodeListSection(),
-          Divider(color: Colors.grey.shade200),
           _buildRepositoriesSection(),
-          Divider(color: Colors.grey.shade200),
           _buildIssuesSection(),
-          Divider(color: Colors.grey.shade200),
           _buildPullRequestsSection(),
-          Divider(color: Colors.grey.shade200),
           _buildUserListSection(),
-          Divider(color: Colors.grey.shade200),
           _buildOrganizationListSection(),
         ],
       ),
@@ -62,6 +57,12 @@ class SearchResultWidget extends StatelessWidget {
   _buildCodeListSection() {
     return BlocBuilder<SearchCodeBloc, SearchState>(
       builder: (context, state) {
+        if (state is Searching) {
+          return const SizedBox();
+        }
+        if (state is Searched && state.result.isEmpty) {
+          return const SizedBox();
+        }
         return Column(
           children: [
             const SizedBox(height: 8),
@@ -100,29 +101,32 @@ class SearchResultWidget extends StatelessWidget {
               },
             ),
             const SizedBox(height: 8),
-            GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: () => _goToSearchResultScreen(context,
-                  searchType: SearchType.code,
-                  searchBloc: context.read<SearchCodeBloc>()),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Row(
-                  children: [
-                    Text(
-                      "${(state.totalCount - 3).shortened()}개의 코드 더 보기",
-                    ),
-                    const Spacer(),
-                    Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      color: Colors.grey.shade400,
-                      size: 16,
-                    ),
-                  ],
+            if (!(!state.hasMore && state.result.length <= 3)) ...[
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () => _goToSearchResultScreen(context,
+                    searchType: SearchType.code,
+                    searchBloc: context.read<SearchCodeBloc>()),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Row(
+                    children: [
+                      Text(
+                        "${(state.totalCount - 3).shortened()}개의 코드 더 보기",
+                      ),
+                      const Spacer(),
+                      Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: Colors.grey.shade400,
+                        size: 16,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 16),
+              const SizedBox(height: 16),
+            ],
+            Divider(color: Colors.grey.shade200),
           ],
         );
       },
@@ -132,6 +136,12 @@ class SearchResultWidget extends StatelessWidget {
   _buildRepositoriesSection() {
     return BlocBuilder<SearchRepositoriesBloc, SearchState>(
       builder: (context, state) {
+        if (state is Searching) {
+          return const SizedBox();
+        }
+        if (state is Searched && state.result.isEmpty) {
+          return const SizedBox();
+        }
         return Column(
           children: [
             const SizedBox(height: 8),
@@ -171,29 +181,32 @@ class SearchResultWidget extends StatelessWidget {
               },
             ),
             const SizedBox(height: 8),
-            GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: () => _goToSearchResultScreen(context,
-                  searchType: SearchType.repositories,
-                  searchBloc: context.read<SearchRepositoriesBloc>()),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Row(
-                  children: [
-                    Text(
-                      "${(state.totalCount - 3).shortened()}개의 리포지토리 더 보기",
-                    ),
-                    const Spacer(),
-                    Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      color: Colors.grey.shade400,
-                      size: 16,
-                    ),
-                  ],
+            if (!(!state.hasMore && state.result.length <= 3)) ...[
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () => _goToSearchResultScreen(context,
+                    searchType: SearchType.repositories,
+                    searchBloc: context.read<SearchRepositoriesBloc>()),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Row(
+                    children: [
+                      Text(
+                        "${(state.totalCount - 3).shortened()}개의 리포지토리 더 보기",
+                      ),
+                      const Spacer(),
+                      Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: Colors.grey.shade400,
+                        size: 16,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 16),
+              const SizedBox(height: 16),
+            ],
+            Divider(color: Colors.grey.shade200),
           ],
         );
       },
@@ -203,6 +216,12 @@ class SearchResultWidget extends StatelessWidget {
   _buildIssuesSection() {
     return BlocBuilder<SearchIssuesBloc, SearchState>(
       builder: (context, state) {
+        if (state is Searching) {
+          return const SizedBox();
+        }
+        if (state is Searched && state.result.isEmpty) {
+          return const SizedBox();
+        }
         return Column(
           children: [
             const SizedBox(height: 8),
@@ -245,29 +264,32 @@ class SearchResultWidget extends StatelessWidget {
               },
             ),
             const SizedBox(height: 8),
-            GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: () => _goToSearchResultScreen(context,
-                  searchType: SearchType.issues,
-                  searchBloc: context.read<SearchIssuesBloc>()),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Row(
-                  children: [
-                    Text(
-                      "${(state.totalCount - 3).shortened()}개의 이슈 더 보기",
-                    ),
-                    const Spacer(),
-                    Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      color: Colors.grey.shade400,
-                      size: 16,
-                    ),
-                  ],
+            if (!(!state.hasMore && state.result.length <= 3)) ...[
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () => _goToSearchResultScreen(context,
+                    searchType: SearchType.issues,
+                    searchBloc: context.read<SearchIssuesBloc>()),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Row(
+                    children: [
+                      Text(
+                        "${(state.totalCount - 3).shortened()}개의 이슈 더 보기",
+                      ),
+                      const Spacer(),
+                      Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: Colors.grey.shade400,
+                        size: 16,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 16),
+              const SizedBox(height: 16),
+            ],
+            Divider(color: Colors.grey.shade200),
           ],
         );
       },
@@ -277,6 +299,12 @@ class SearchResultWidget extends StatelessWidget {
   _buildPullRequestsSection() {
     return BlocBuilder<SearchPullRequestsBloc, SearchState>(
       builder: (context, state) {
+        if (state is Searching) {
+          return const SizedBox();
+        }
+        if (state is Searched && state.result.isEmpty) {
+          return const SizedBox();
+        }
         return Column(
           children: [
             const SizedBox(height: 8),
@@ -319,29 +347,32 @@ class SearchResultWidget extends StatelessWidget {
               },
             ),
             const SizedBox(height: 8),
-            GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: () => _goToSearchResultScreen(context,
-                  searchType: SearchType.pullRequest,
-                  searchBloc: context.read<SearchPullRequestsBloc>()),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: Row(
-                  children: [
-                    Text(
-                      "${(state.totalCount - 3).shortened()}개의 Pull Request 더 보기",
-                    ),
-                    const Spacer(),
-                    Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      color: Colors.grey.shade400,
-                      size: 16,
-                    ),
-                  ],
+            if (!(!state.hasMore && state.result.length <= 3)) ...[
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () => _goToSearchResultScreen(context,
+                    searchType: SearchType.pullRequest,
+                    searchBloc: context.read<SearchPullRequestsBloc>()),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Row(
+                    children: [
+                      Text(
+                        "${(state.totalCount - 3).shortened()}개의 Pull Request 더 보기",
+                      ),
+                      const Spacer(),
+                      Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: Colors.grey.shade400,
+                        size: 16,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            const SizedBox(height: 16),
+              const SizedBox(height: 16),
+            ],
+            Divider(color: Colors.grey.shade200),
           ],
         );
       },
@@ -353,6 +384,12 @@ class SearchResultWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: BlocBuilder<SearchUsersBloc, SearchState>(
         builder: (context, state) {
+          if (state is Searching) {
+            return const SizedBox();
+          }
+          if (state is Searched && state.result.isEmpty) {
+            return const SizedBox();
+          }
           return Column(
             children: [
               const SizedBox(height: 8),
@@ -377,26 +414,29 @@ class SearchResultWidget extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 8),
-              GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () => _goToSearchResultScreen(context,
-                    searchType: SearchType.users,
-                    searchBloc: context.read<SearchUsersBloc>()),
-                child: Row(
-                  children: [
-                    Text(
-                      "${(state.totalCount - 3).shortened()}명 더 보기",
-                    ),
-                    const Spacer(),
-                    Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      color: Colors.grey.shade400,
-                      size: 16,
-                    ),
-                  ],
+              if (!(!state.hasMore && state.result.length <= 3)) ...[
+                GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => _goToSearchResultScreen(context,
+                      searchType: SearchType.users,
+                      searchBloc: context.read<SearchUsersBloc>()),
+                  child: Row(
+                    children: [
+                      Text(
+                        "${(state.totalCount - 3).shortened()}명 더 보기",
+                      ),
+                      const Spacer(),
+                      Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: Colors.grey.shade400,
+                        size: 16,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 16),
+                const SizedBox(height: 16),
+              ],
+              Divider(color: Colors.grey.shade200),
             ],
           );
         },
@@ -405,14 +445,20 @@ class SearchResultWidget extends StatelessWidget {
   }
 
   _buildOrganizationListSection() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
-      child: BlocBuilder<SearchOrganizationsBloc, SearchState>(
-        builder: (context, state) {
-          return Column(
-            children: [
-              const SizedBox(height: 8),
-              const Row(
+    return BlocBuilder<SearchOrganizationsBloc, SearchState>(
+      builder: (context, state) {
+        if (state is Searching) {
+          return const SizedBox();
+        }
+        if (state is Searched && state.result.isEmpty) {
+          return const SizedBox();
+        }
+        return Column(
+          children: [
+            const SizedBox(height: 8),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 12),
+              child: Row(
                 children: [
                   Text(
                     "조직",
@@ -422,41 +468,49 @@ class SearchResultWidget extends StatelessWidget {
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
-              ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: state.result.length < 3 ? state.result.length : 3,
-                itemBuilder: (context, index) {
-                  GithubUserInfo user = state.result[index] as GithubUserInfo;
-                  return UserListItem(user: user);
-                },
-              ),
-              const SizedBox(height: 8),
-              GestureDetector(
-                behavior: HitTestBehavior.opaque,
-                onTap: () => _goToSearchResultScreen(context,
-                    searchType: SearchType.organizations,
-                    searchBloc: context.read<SearchOrganizationsBloc>()),
-                child: Row(
-                  children: [
-                    Text(
-                      "${(state.totalCount - 3).shortened()}개 조직 더 보기",
-                    ),
-                    const Spacer(),
-                    Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      color: Colors.grey.shade400,
-                      size: 16,
-                    ),
-                  ],
+            ),
+            const SizedBox(height: 8),
+            ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: state.result.length < 3 ? state.result.length : 3,
+              itemBuilder: (context, index) {
+                GithubUserInfo user = state.result[index] as GithubUserInfo;
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: UserListItem(user: user),
+                );
+              },
+            ),
+            const SizedBox(height: 8),
+            if (!(!state.hasMore && state.result.length <= 3)) ...[
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: GestureDetector(
+                  behavior: HitTestBehavior.opaque,
+                  onTap: () => _goToSearchResultScreen(context,
+                      searchType: SearchType.organizations,
+                      searchBloc: context.read<SearchOrganizationsBloc>()),
+                  child: Row(
+                    children: [
+                      Text(
+                        "${(state.totalCount - 3).shortened()}개 조직 더 보기",
+                      ),
+                      const Spacer(),
+                      Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: Colors.grey.shade400,
+                        size: 16,
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
             ],
-          );
-        },
-      ),
+          ],
+        );
+      },
     );
   }
 }

@@ -120,10 +120,16 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                     );
                   case SearchType.users:
                     GithubUserInfo user = state.result[index] as GithubUserInfo;
-                    return UserListItem(user: user);
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: UserListItem(user: user),
+                    );
                   case SearchType.organizations:
                     GithubUserInfo user = state.result[index] as GithubUserInfo;
-                    return UserListItem(user: user);
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: UserListItem(user: user),
+                    );
                 }
               },
               separatorBuilder: (context, index) {
