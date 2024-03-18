@@ -87,11 +87,11 @@ https://docs.github.com/ko/apps/creating-github-apps/registering-a-github-app/re
 
 #### 스크린샷
 
-![KakaoTalk_Photo_2024-03-18-22-33-11 001](https://github.com/JakeSeo/githubsearch/assets/10471865/a5b716ad-037e-40b0-a450-4d1ffed7a688)
-![KakaoTalk_Photo_2024-03-18-22-33-12 002](https://github.com/JakeSeo/githubsearch/assets/10471865/780f77b0-dd75-4b3f-817f-e639102bff9d)
-![KakaoTalk_Photo_2024-03-18-22-33-12 003](https://github.com/JakeSeo/githubsearch/assets/10471865/1a0a8663-75bc-417f-bd4c-0068627c08fe)
-![KakaoTalk_Photo_2024-03-18-22-33-12 004](https://github.com/JakeSeo/githubsearch/assets/10471865/e35cac9e-3355-4a58-a55e-e160c6562206)
-![KakaoTalk_Photo_2024-03-18-22-33-12 005](https://github.com/JakeSeo/githubsearch/assets/10471865/2a1d692a-1045-470d-8af1-db2d3819048c)
-![KakaoTalk_Photo_2024-03-18-22-33-12 006](https://github.com/JakeSeo/githubsearch/assets/10471865/57337498-ab10-4c87-bd20-723a45d3c5a9)
-![KakaoTalk_Photo_2024-03-18-22-33-12 007](https://github.com/JakeSeo/githubsearch/assets/10471865/4a27ef04-1d2c-4c40-b8d2-cec09842052f)
-![KakaoTalk_Photo_2024-03-18-22-33-12 008](https://github.com/JakeSeo/githubsearch/assets/10471865/6c673d27-022a-48b6-902b-2d4d1e50949a)
+<img src = "https://github.com/JakeSeo/githubsearch/assets/10471865/a5b716ad-037e-40b0-a450-4d1ffed7a688" width="25%"/>
+<img src = "https://github.com/JakeSeo/githubsearch/assets/10471865/780f77b0-dd75-4b3f-817f-e639102bff9d" width="25%"/>
+<img src = "https://github.com/JakeSeo/githubsearch/assets/10471865/1a0a8663-75bc-417f-bd4c-0068627c08fe" width="25%"/>
+<img src = "https://github.com/JakeSeo/githubsearch/assets/10471865/e35cac9e-3355-4a58-a55e-e160c6562206" width="25%"/>
+<img src = "https://github.com/JakeSeo/githubsearch/assets/10471865/2a1d692a-1045-470d-8af1-db2d3819048c" width="25%"/>
+<img src = "https://github.com/JakeSeo/githubsearch/assets/10471865/57337498-ab10-4c87-bd20-723a45d3c5a9" width="25%"/>
+<img src = "https://github.com/JakeSeo/githubsearch/assets/10471865/4a27ef04-1d2c-4c40-b8d2-cec09842052f" width="25%"/>
+<img src = "https://github.com/JakeSeo/githubsearch/assets/10471865/6c673d27-022a-48b6-902b-2d4d1e50949a" width="25%"/>
