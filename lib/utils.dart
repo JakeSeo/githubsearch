@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'models/search_response/info.dart';
+
 class Utils {
   static const authInfoKey = "auth_info";
 }
@@ -41,6 +43,28 @@ extension StringExtension on String {
     } catch (_) {
       return null;
     }
+  }
+
+  SearchType? toSearchType() {
+    if (this == SearchType.code.value) {
+      return SearchType.code;
+    }
+    if (this == SearchType.repositories.value) {
+      return SearchType.repositories;
+    }
+    if (this == SearchType.issues.value) {
+      return SearchType.issues;
+    }
+    if (this == SearchType.pullRequest.value) {
+      return SearchType.pullRequest;
+    }
+    if (this == SearchType.users.value) {
+      return SearchType.users;
+    }
+    if (this == SearchType.organizations.value) {
+      return SearchType.organizations;
+    }
+    return null;
   }
 }
 

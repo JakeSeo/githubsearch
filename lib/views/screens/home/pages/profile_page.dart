@@ -16,7 +16,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  GlobalKey _profileSectionKey = GlobalKey();
+  final GlobalKey _profileSectionKey = GlobalKey();
   final ScrollController _mainScrollController = ScrollController();
   final ScrollController _appBarScrollController = ScrollController();
 

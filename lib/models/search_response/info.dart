@@ -15,17 +15,42 @@ abstract class SearchResponseInfo {
 }
 
 enum SearchType {
-  code(icon: Icons.code, label: "코드"),
-  repositories(icon: Icons.book, label: "리포지토리"),
-  issues(icon: Icons.error_outline, label: "이슈"),
-  pullRequest(icon: Icons.subdirectory_arrow_left, label: "Pull Request"),
-  users(icon: Icons.person, label: "사용자"),
-  organizations(icon: Icons.business, label: "조직");
+  code(
+    icon: Icons.code,
+    label: "코드",
+    value: "code",
+  ),
+  repositories(
+    icon: Icons.book,
+    label: "리포지토리",
+    value: "repositories",
+  ),
+  issues(
+    icon: Icons.error_outline,
+    label: "이슈",
+    value: "issues",
+  ),
+  pullRequest(
+    icon: Icons.subdirectory_arrow_left,
+    label: "Pull Request",
+    value: "pull_requests",
+  ),
+  users(
+    icon: Icons.person,
+    label: "사용자",
+    value: "users",
+  ),
+  organizations(
+    icon: Icons.business,
+    label: "조직",
+    value: "organizations",
+  );
 
   final IconData icon;
-  final String label;
+  final String label, value;
   const SearchType({
     required this.icon,
     required this.label,
+    required this.value,
   });
 }

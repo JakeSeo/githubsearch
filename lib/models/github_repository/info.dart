@@ -67,47 +67,47 @@ class GithubRepositoryInfo extends SearchResultInfo {
   @JsonKey(name: "git_tags_url")
   final String gitTagsUrl;
   @JsonKey(name: "git_url")
-  final String gitUrl;
+  final String? gitUrl;
   @JsonKey(name: "issue_comment_url")
-  final String issueCommentUrl;
+  final String? issueCommentUrl;
   @JsonKey(name: "issue_events_url")
-  final String issueEventsUrl;
+  final String? issueEventsUrl;
   @JsonKey(name: "issues_url")
-  final String issuesUrl;
+  final String? issuesUrl;
   @JsonKey(name: "keys_url")
-  final String keysUrl;
+  final String? keysUrl;
   @JsonKey(name: "labels_url")
-  final String labelsUrl;
+  final String? labelsUrl;
   @JsonKey(name: "languages_url")
-  final String languagesUrl;
+  final String? languagesUrl;
   @JsonKey(name: "merges_url")
-  final String mergesUrl;
+  final String? mergesUrl;
   @JsonKey(name: "milestones_url")
-  final String milestonesUrl;
+  final String? milestonesUrl;
   @JsonKey(name: "notifications_url")
-  final String notificationsUrl;
+  final String? notificationsUrl;
   @JsonKey(name: "pulls_url")
-  final String pullsUrl;
+  final String? pullsUrl;
   @JsonKey(name: "releases_url")
-  final String releasesUrl;
+  final String? releasesUrl;
   @JsonKey(name: "ssh_url")
-  final String sshUrl;
+  final String? sshUrl;
   @JsonKey(name: "stargazers_url")
-  final String stargazersUrl;
+  final String? stargazersUrl;
   @JsonKey(name: "statuses_url")
-  final String statusesUrl;
+  final String? statusesUrl;
   @JsonKey(name: "subscribers_url")
-  final String subscribersUrl;
+  final String? subscribersUrl;
   @JsonKey(name: "subscription_url")
-  final String subscriptionUrl;
+  final String? subscriptionUrl;
   @JsonKey(name: "tags_url")
-  final String tagsUrl;
+  final String? tagsUrl;
   @JsonKey(name: "teams_url")
-  final String teamsUrl;
+  final String? teamsUrl;
   @JsonKey(name: "trees_url")
-  final String treesUrl;
+  final String? treesUrl;
   @JsonKey(name: "clone_url")
-  final String cloneUrl;
+  final String? cloneUrl;
   @JsonKey(name: "mirror_url")
   final String? mirrorUrl;
   @JsonKey(name: "hooks_url")
@@ -127,7 +127,7 @@ class GithubRepositoryInfo extends SearchResultInfo {
   @JsonKey(name: "size")
   final int size;
   @JsonKey(name: "default_branch")
-  final String defaultBranch;
+  final String? defaultBranch;
   @JsonKey(name: "open_issues_count")
   final int openIssuesCount;
   @JsonKey(name: "is_template")
@@ -243,22 +243,22 @@ class GithubRepositoryInfo extends SearchResultInfo {
     required this.url,
     required this.cloneUrl,
     required this.defaultBranch,
-    required this.forks,
-    required this.forksCount,
+    this.forks = 0,
+    this.forksCount = 0,
     required this.gitUrl,
     required this.homepage,
     required this.language,
     required this.mirrorUrl,
-    required this.openIssues,
-    required this.openIssuesCount,
+    this.openIssues = 0,
+    this.openIssuesCount = 0,
     required this.license,
     required this.pushedAt,
-    required this.size,
+    this.size = 0,
     required this.sshUrl,
-    required this.stargazersCount,
+    this.stargazersCount = 0,
     required this.svnUrl,
-    required this.watchers,
-    required this.watchersCount,
+    this.watchers = 0,
+    this.watchersCount = 0,
     required this.createdAt,
     required this.updatedAt,
     this.permissions = const PermissionsInfo(),

@@ -2,18 +2,40 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:githubsearch/utils.dart';
 import 'package:githubsearch/utils.dart' as utils;
+import 'package:go_router/go_router.dart';
 
 import '../../../../blocs/search/bloc.dart';
+import '../../../../models/github_code/info.dart';
 import '../../../../models/github_issue/info.dart';
 import '../../../../models/github_repository/info.dart';
 import '../../../../models/github_user/info.dart';
 import '../../../../models/search_response/info.dart';
+import '../../search_result_screen.dart';
+import 'code_list_item.dart';
 import 'issue_list_item.dart';
 import 'repository_list_item.dart';
 import 'user_list_item.dart';
 
 class SearchResultWidget extends StatelessWidget {
-  const SearchResultWidget({super.key});
+  const SearchResultWidget({
+    super.key,
+    required this.query,
+  });
+
+  final String query;
+
+  _goToSearchResultScreen(
+    BuildContext context, {
+    required SearchType searchType,
+    required SearchBloc searchBloc,
+  }) {
+    context.pushNamed(
+      SearchResultScreen.name,
+      pathParameters: {"type": searchType.value},
+      queryParameters: {"q": query},
+      extra: searchBloc,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +43,8 @@ class SearchResultWidget extends StatelessWidget {
       color: Colors.white,
       child: Column(
         children: [
+          _buildCodeListSection(),
+          Divider(color: Colors.grey.shade200),
           _buildRepositoriesSection(),
           Divider(color: Colors.grey.shade200),
           _buildIssuesSection(),
@@ -32,6 +56,76 @@ class SearchResultWidget extends StatelessWidget {
           _buildOrganizationListSection(),
         ],
       ),
+    );
+  }
+
+  _buildCodeListSection() {
+    return BlocBuilder<SearchCodeBloc, SearchState>(
+      builder: (context, state) {
+        return Column(
+          children: [
+            const SizedBox(height: 8),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 12),
+              child: Row(
+                children: [
+                  Text(
+                    "코드",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 8),
+            ListView.builder(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: state.result.length < 3 ? state.result.length : 3,
+              itemBuilder: (context, index) {
+                GithubCodeInfo code = state.result[index] as GithubCodeInfo;
+                return Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12),
+                      child: CodeListItem(code: code),
+                    ),
+                    Divider(
+                      color: Colors.grey.shade200,
+                      thickness: 0.5,
+                    ),
+                  ],
+                );
+              },
+            ),
+            const SizedBox(height: 8),
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () => _goToSearchResultScreen(context,
+                  searchType: SearchType.code,
+                  searchBloc: context.read<SearchCodeBloc>()),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Row(
+                  children: [
+                    Text(
+                      "${(state.totalCount - 3).shortened()}개의 코드 더 보기",
+                    ),
+                    const Spacer(),
+                    Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      color: Colors.grey.shade400,
+                      size: 16,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+          ],
+        );
+      },
     );
   }
 
@@ -77,23 +171,26 @@ class SearchResultWidget extends StatelessWidget {
               },
             ),
             const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Row(
-                children: [
-                  Text(
-                    "${(state.totalCount - 3).shortened()}개의 리포지토리 더 보기",
-                  ),
-                  const Spacer(),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Icon(
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () => _goToSearchResultScreen(context,
+                  searchType: SearchType.repositories,
+                  searchBloc: context.read<SearchRepositoriesBloc>()),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Row(
+                  children: [
+                    Text(
+                      "${(state.totalCount - 3).shortened()}개의 리포지토리 더 보기",
+                    ),
+                    const Spacer(),
+                    Icon(
                       Icons.arrow_forward_ios_rounded,
                       color: Colors.grey.shade400,
                       size: 16,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 16),
@@ -130,7 +227,6 @@ class SearchResultWidget extends StatelessWidget {
               itemBuilder: (context, index) {
                 GithubIssueInfo issue = state.result[index] as GithubIssueInfo;
 
-                final urlSplit = issue.repositoryUrl.split("/");
                 return Column(
                   children: [
                     Padding(
@@ -138,39 +234,7 @@ class SearchResultWidget extends StatelessWidget {
                         vertical: 8,
                         horizontal: 12,
                       ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Icon(
-                            SearchType.issues.icon,
-                            color: issue.state == "open"
-                                ? Colors.green.shade400
-                                : Colors.purple.shade400,
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  "${urlSplit[urlSplit.length - 2]}/${urlSplit.last} #${issue.number}",
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.grey.shade500,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                Text(issue.title),
-                              ],
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            issue.updatedAt.differenceString(),
-                          )
-                        ],
-                      ),
+                      child: IssueListItem(issue: issue),
                     ),
                     Divider(
                       color: Colors.grey.shade200,
@@ -181,23 +245,26 @@ class SearchResultWidget extends StatelessWidget {
               },
             ),
             const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Row(
-                children: [
-                  Text(
-                    "${(state.totalCount - 3).shortened()}개의 이슈 더 보기",
-                  ),
-                  const Spacer(),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Icon(
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () => _goToSearchResultScreen(context,
+                  searchType: SearchType.issues,
+                  searchBloc: context.read<SearchIssuesBloc>()),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Row(
+                  children: [
+                    Text(
+                      "${(state.totalCount - 3).shortened()}개의 이슈 더 보기",
+                    ),
+                    const Spacer(),
+                    Icon(
                       Icons.arrow_forward_ios_rounded,
                       color: Colors.grey.shade400,
                       size: 16,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 16),
@@ -252,23 +319,26 @@ class SearchResultWidget extends StatelessWidget {
               },
             ),
             const SizedBox(height: 8),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Row(
-                children: [
-                  Text(
-                    "${(state.totalCount - 3).shortened()}개의 PullRequest 더 보기",
-                  ),
-                  const Spacer(),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Icon(
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () => _goToSearchResultScreen(context,
+                  searchType: SearchType.pullRequest,
+                  searchBloc: context.read<SearchPullRequestsBloc>()),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Row(
+                  children: [
+                    Text(
+                      "${(state.totalCount - 3).shortened()}개의 Pull Request 더 보기",
+                    ),
+                    const Spacer(),
+                    Icon(
                       Icons.arrow_forward_ios_rounded,
                       color: Colors.grey.shade400,
                       size: 16,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
             const SizedBox(height: 16),
@@ -307,21 +377,24 @@ class SearchResultWidget extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 8),
-              Row(
-                children: [
-                  Text(
-                    "${(state.totalCount - 3).shortened()}명 더 보기",
-                  ),
-                  const Spacer(),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Icon(
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () => _goToSearchResultScreen(context,
+                    searchType: SearchType.users,
+                    searchBloc: context.read<SearchUsersBloc>()),
+                child: Row(
+                  children: [
+                    Text(
+                      "${(state.totalCount - 3).shortened()}명 더 보기",
+                    ),
+                    const Spacer(),
+                    Icon(
                       Icons.arrow_forward_ios_rounded,
                       color: Colors.grey.shade400,
                       size: 16,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               const SizedBox(height: 16),
             ],
@@ -360,21 +433,24 @@ class SearchResultWidget extends StatelessWidget {
                 },
               ),
               const SizedBox(height: 8),
-              Row(
-                children: [
-                  Text(
-                    "${(state.totalCount - 3).shortened()}개 조직 더 보기",
-                  ),
-                  const Spacer(),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Icon(
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () => _goToSearchResultScreen(context,
+                    searchType: SearchType.organizations,
+                    searchBloc: context.read<SearchOrganizationsBloc>()),
+                child: Row(
+                  children: [
+                    Text(
+                      "${(state.totalCount - 3).shortened()}개 조직 더 보기",
+                    ),
+                    const Spacer(),
+                    Icon(
                       Icons.arrow_forward_ios_rounded,
                       color: Colors.grey.shade400,
                       size: 16,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               const SizedBox(height: 16),
             ],

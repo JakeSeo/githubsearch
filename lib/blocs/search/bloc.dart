@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../models/search_response/code/info.dart';
 import '../../models/search_response/info.dart';
 import '../../models/search_response/issues/info.dart';
 import '../../models/search_response/repositories/info.dart';
@@ -26,11 +27,8 @@ mixin SearchHistoryMixin on Bloc<SearchEvent, SearchState> {
     q = event.q;
     currentPage = 0;
 
-    emit(Searching(
-      hasMore: state.hasMore,
-      totalCount: state.totalCount,
-      result: state.result,
-    ));
+    emit(Searching());
+
     add(LoadMore());
   }
 
@@ -52,6 +50,7 @@ mixin SearchHistoryMixin on Bloc<SearchEvent, SearchState> {
       late List<SearchResultInfo> searchResult;
       switch (type) {
         case SearchType.code:
+          searchResult = (searchResponse as SearchCodeResponseInfo).codeList;
           break;
         case SearchType.repositories:
           searchResult =
@@ -71,11 +70,15 @@ mixin SearchHistoryMixin on Bloc<SearchEvent, SearchState> {
           break;
       }
       currentPage++;
+      final newList = [
+        ...state.result,
+        ...searchResult,
+      ];
       emit(
         Searched(
           hasMore: searchResult.length < searchResponse.totalCount,
           totalCount: searchResponse.totalCount,
-          result: searchResult,
+          result: newList,
         ),
       );
     } catch (e) {
