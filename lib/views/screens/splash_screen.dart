@@ -1,9 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../blocs/auth/bloc.dart';
+import '../../injector.dart';
 import '../common/custom_icon.dart';
 import '../view_utils.dart';
 import 'home/pages/home_page.dart';
@@ -22,7 +25,17 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<AuthBloc>().add(AuthInitialize());
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      final json = jsonDecode(await DefaultAssetBundle.of(context)
+          .loadString("assets/programming_language_colors.json"));
+
+      injector.registerSingleton<Map<String, dynamic>>(
+        json,
+        instanceName: "plColors",
+      );
+
+      if (mounted) context.read<AuthBloc>().add(AuthInitialize());
+    });
   }
 
   _goToLoginScreen() async {

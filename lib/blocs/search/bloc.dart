@@ -1,6 +1,8 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../models/search_response/info.dart';
+import '../../models/search_response/issues/info.dart';
+import '../../models/search_response/repositories/info.dart';
 import '../../models/search_response/user/info.dart';
 import '../../models/search_result_info.dart';
 import '../../repositories/search_strategy.dart';
@@ -52,10 +54,14 @@ mixin SearchHistoryMixin on Bloc<SearchEvent, SearchState> {
         case SearchType.code:
           break;
         case SearchType.repositories:
+          searchResult =
+              (searchResponse as SearchRepositoriesResponseInfo).repositories;
           break;
         case SearchType.issues:
+          searchResult = (searchResponse as SearchIssuesResponseInfo).issueList;
           break;
         case SearchType.pullRequest:
+          searchResult = (searchResponse as SearchIssuesResponseInfo).issueList;
           break;
         case SearchType.users:
           searchResult = (searchResponse as SearchUserResponseInfo).userList;
@@ -65,12 +71,11 @@ mixin SearchHistoryMixin on Bloc<SearchEvent, SearchState> {
           break;
       }
       currentPage++;
-      final newResult = [...state.result, ...searchResult];
       emit(
         Searched(
-          hasMore: newResult.length < searchResponse.totalCount,
+          hasMore: searchResult.length < searchResponse.totalCount,
           totalCount: searchResponse.totalCount,
-          result: newResult,
+          result: searchResult,
         ),
       );
     } catch (e) {
@@ -108,5 +113,37 @@ class SearchOrganizationsBloc extends SearchBloc {
       : super(
           type: SearchType.organizations,
           strategy: SearchOrganizationsStrategy(),
+        );
+}
+
+class SearchIssuesBloc extends SearchBloc {
+  SearchIssuesBloc()
+      : super(
+          type: SearchType.issues,
+          strategy: SearchIssuesStrategy(),
+        );
+}
+
+class SearchPullRequestsBloc extends SearchBloc {
+  SearchPullRequestsBloc()
+      : super(
+          type: SearchType.pullRequest,
+          strategy: SearchPullRequestsStrategy(),
+        );
+}
+
+class SearchRepositoriesBloc extends SearchBloc {
+  SearchRepositoriesBloc()
+      : super(
+          type: SearchType.repositories,
+          strategy: SearchRepositoriesStrategy(),
+        );
+}
+
+class SearchCodeBloc extends SearchBloc {
+  SearchCodeBloc()
+      : super(
+          type: SearchType.code,
+          strategy: SearchCodeStrategy(),
         );
 }

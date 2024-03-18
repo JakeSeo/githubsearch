@@ -115,6 +115,8 @@ enum UserType {
   user,
   @JsonValue("Organization")
   organization,
+  @JsonValue("Bot")
+  bot,
 }
 
 // /user
